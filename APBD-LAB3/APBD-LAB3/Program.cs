@@ -1,3 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿using System;
+using APBD_LAB3;
 
-Console.WriteLine("Hello, World!");
+Container container = new Container();
