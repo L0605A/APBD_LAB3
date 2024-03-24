@@ -6,19 +6,19 @@ namespace APBD_LAB3;
 
 public class Container : IContainer
 {
-    private double CargoWeight { get; set; }
+    protected double CargoWeight { get; set; }
 
-    private double Height { get; set; }
+    protected double Height { get; set; }
 
-    private double SelfWeight { get; set; }
+    protected double SelfWeight { get; set; }
 
-    private double Depth { get; set; }
+    protected double Depth { get; set; }
 
-    private string? SerialNumber { get; set; }
+    public string? SerialNumber { get; set; }
 
-    private double MaxWeight { get; set; }
+    protected double MaxWeight { get; set; }
 
-    public Container(double cargoWeight, double height, double selfWeight, double depth, string? serialNumber, double maxWeight)
+    protected Container(double height, double selfWeight, double depth, string? serialNumber, double maxWeight)
     {
         Height = height;
         SelfWeight = selfWeight;
@@ -27,15 +27,36 @@ public class Container : IContainer
         MaxWeight = maxWeight;
     }
 
-    public void Unload()
+    public virtual void Unload()
     {
         CargoWeight = 0;
-        throw new NotImplementedException();
     }
 
     public virtual void Load(double cargoWeight)
     {
-        CargoWeight = cargoWeight;
-        throw new OverfillException();
+        if (cargoWeight <= MaxWeight)
+        {
+            CargoWeight = cargoWeight;
+        }
+        else
+        {
+            throw new OverfillException("!Warning! Overfill");
+        }
+        
+    }
+
+    public virtual void PrintData()
+    {
+        Console.WriteLine($"Container Data for container with a serial number: {SerialNumber}");
+        Console.WriteLine($"Height: {Height}");
+        Console.WriteLine($"Self Weight: {SelfWeight}");
+        Console.WriteLine($"Depth: {Depth}");
+        Console.WriteLine($"Max Weight: {MaxWeight}");
+        Console.WriteLine($"Cargo Weight: {CargoWeight}");
+    }
+    
+    public override string ToString()
+    {
+        return "Container with Serial Number: " + SerialNumber;
     }
 }
